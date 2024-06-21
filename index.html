@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            width: 50%;
+            margin: 0 auto;
+            font-family: Arial, Helvetica, sans-serif;
+
+        }
+
+        .container {
+            width: 360px;
+            padding: 2em 2.5em;
+            box-shadow: 0 1em 2em rgba(0, 0, 0, 0.3);
+            border-radius: 0.8em;
+            background-color: lightgrey;
+
+        }
+
+
+
+        .input {
+            display: flex;
+            gap: 4px;
+            width: 100%;
+            background-color: transparent;
+            color: black;
+            font-size: 0.9em;
+            border: none;
+            border-bottom: 2px solid rgb(90, 149, 255);
+            padding: 1em 0.5em;
+        }
+
+        #inputField {
+            width: 210px;
+            height: 24px;
+            border: 1px solid rgb(90, 149, 255);
+            outline: none;
+            font-size: 20px;
+            vertical-align: middle;
+            border-radius: 10px;
+            padding: 5px;
+            background-color: lightgrey;
+
+
+        }
+
+        .btn {
+            height: 50px;
+            width: 50px;
+            border: 1px solid black;
+            vertical-align: middle;
+            font-size: 30px;
+
+        }
+
+        .todobtn {
+            width: 80px;
+            height: 35px;
+            margin-left: 4px;
+            font-family: fantasy;
+            border-radius: 0.5em;
+            font-weight: 500;
+            font-size: 1em;
+            background-color: #6197fd;
+            border: none;
+            outline: none;
+            color: white;
+            cursor: pointer;
+
+        }
+
+        .todobtn:hover {
+            background-color: #397eff;
+
+
+        }
+
+        .todos {
+            margin-top: 25px;
+
+        }
+
+        .para-style {
+            margin: 0;
+            transition: opacity 0.3s ease-out;
+
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        ul>li {
+            list-style: decimal;
+            font-family: monospace;
+        }
+
+        .edit-btn {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <h1>To Do List</h1>
+
+        <div class="container">
+            <div class="input">
+                <input id="inputField" type="text" placeholder="Add Task">
+                <button id="todobtn" class="todobtn">+</button>
+            </div>
+
+            <ul class="todos" id="todoContainer"></ul>
+        </div>
+    </div>
+
+    <script>
+        var addTodoBtn = document.getElementById('todobtn');
+        var todoContainer = document.getElementById('todoContainer');
+        var inputField = document.getElementById('inputField');
+        addTodoBtn.addEventListener('click', function () {
+            var task = inputField.value.trim();
+
+            if (task !== '') {
+                var li = document.createElement('li');
+                li.textContent = task;
+                li.classList.add('para-style');
+
+                var editBtn = document.createElement('img');
+                editBtn.src = "pencil1.png";
+                editBtn.alt = "Edit";
+                editBtn.classList.add('edit-btn');
+                editBtn.style.width = "14px"
+                editBtn.style.cursor = "pointer"
+                editBtn.addEventListener('click', function () {
+                    var newText = prompt('Edit task:', li.textContent);
+                    if (newText !== null) {
+                        li.firstChild.textContent = newText.trim();
+
+                    }
+
+                });
+
+                var delBtn = document.createElement('img');
+                delBtn.src = "bin.png"
+                delBtn.alt = "Delete"
+                delBtn.classList.add('del-btn');
+                delBtn.style.width = "14px"
+                delBtn.style.cursor = "pointer"
+                delBtn.style.marginLeft = "6px"
+                delBtn.style.transition = "ease-out";
+                delBtn.addEventListener('click', function () {
+                    li.style.opacity = '0'
+                    setTimeout(function () {
+                        li.remove();
+
+                    }, 300)
+                });
+                li.appendChild(editBtn);
+                li.appendChild(delBtn);
+                todoContainer.appendChild(li);
+                inputField.value = '';
+            } else {
+                alert('Cannot Add');
+            }
+        });
+    </script>
+</body>
+
+</html>
